@@ -22,13 +22,16 @@
                     <button type="button" onclick="searchProducts()" class="btn btn-lg btn-dark"> <i class="bi bi-search text-white"></i></button>
                 </div>
         <ul class="navbar-nav flex-row px-4">
-            <p class="text-white fs-5 mb-0"><i class="bi bi-funnel-fill text-white fs-3 mx-3"></i>
 
-                <a href="#" type="button" class="btn btn-lg btn-light px-3 mx-1" onclick="asc()"><i class="bi bi-sort-up"></i> Ascsending Order</a>
-
-                <a href="#" type="button" class="btn btn-lg btn-dark px-3 mx-1" onclick="desc()"><i class="bi bi-sort-down"></i> Decending Order</a>
-
+            <p class="text-white fs-5 mb-0 d-flex">
+                <i class="bi bi-funnel-fill text-white fs-3 mx-3 mt-1"></i><span class="mt-2 mx-3">Filter Products:</span>
+                <select id="priceSort" class="form-select field-control w-auto" onchange="sortByPrice()">
+                    <option value="">Sort by Rs.</option>
+                    <option value="asc"><i class="bi bi-sort-up"></i>₹: Low → High</option>
+                    <option value="desc"><i class="bi bi-sort-down"></i>₹: High → Low</option>
+                </select>
             </p>
+
             <li class="nav-item text-nowrap d-md-none">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -41,7 +44,7 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <div class="sidebar col-md-3 col-lg-2 p-0 bg-sidebar">
+            <aside class="sidebar col-md-3 col-lg-2 p-0 bg-sidebar">
                 <div class="offcanvas-md offcanvas-end bg-sidebar" tabindex="-1" id="sidebarMenu"
                     aria-labelledby="sidebarMenuLabel">
                     <div class="offcanvas-header">
@@ -59,7 +62,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </aside>
             <main class="col-md-9 col-lg-10 px-md-4 bg-dashbaord">
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-4 row-cols-xl-4 g-3" id="productList">

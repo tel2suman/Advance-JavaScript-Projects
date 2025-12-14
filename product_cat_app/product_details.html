@@ -27,22 +27,15 @@
                     class="bi bi-search text-white"></i></button>
         </div>
         <ul class="navbar-nav flex-row px-4">
-            <p class="text-white fs-5 mb-0"><i class="bi bi-funnel-fill text-white fs-3 mx-3"></i>
-
-                <a href="#" type="button" class="btn btn-lg btn-light px-3 mx-1" onclick="asc()"><i
-                        class="bi bi-sort-up"></i> Ascsending Order</a>
-
-                <a href="#" type="button" class="btn btn-lg btn-dark px-3 mx-1" onclick="desc()"><i
-                        class="bi bi-sort-down"></i> Decending Order</a>
-
+            <p class="text-white fs-5 mb-0 d-flex">
+                <i class="bi bi-funnel-fill text-white fs-3 mx-3 mt-1"></i><span class="mt-2 mx-3">Filter Products:</span>
+                <select id="priceSort" class="form-select field-control w-auto" onchange="sortByPrice()">
+                    <option value="">Sort by Rs.</option>
+                    <option value="asc"><i class="bi bi-sort-up"></i>₹: Low → High</option>
+                    <option value="desc"><i class="bi bi-sort-down"></i>₹: High → Low</option>
+                </select>
             </p>
-            <li class="nav-item text-nowrap">
-                <!-- <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false"
-                        aria-label="Toggle search">
-                        Search Products <i class="bi bi-search text-white mx-2"></i>
-                    </button> -->
-            </li>
+
             <li class="nav-item text-nowrap d-md-none">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"

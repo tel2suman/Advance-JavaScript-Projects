@@ -1,32 +1,45 @@
 
-//fetch products function
+let allProducts = [];
+
+// fetch all products function
 async function fetchProducts() {
+  try {
+    const response = await fetch("https://dummyjson.com/products");
+    if (!response.ok) throw new Error("Network Error");
 
-    try {
-        const response = await fetch("https://dummyjson.com/products");
+    const data = await response.json();
+    allProducts = data.products;
 
-        if (!response.ok) throw new Error ("Network Error");
+    renderedProducts(allProducts);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-        const data = await response.json();
+document.addEventListener("DOMContentLoaded", fetchProducts);
 
-        const productList = document.getElementById("productList");
 
-        data.products.map((product) => {
+//show rendered products
+async function renderedProducts(products) {
+  try {
 
-          const div = document.createElement("div");
+    const productList = document.getElementById("productList");
 
-          div.className = "col";
+    productList.innerHTML = "";
 
-          div.innerHTML = `
+    products.map((product) => {
+      const div = document.createElement("div");
+
+      div.className = "col";
+
+      div.innerHTML = `
           <div class="card product-card border-0 rounded-4 shadow-lg my-4">
               <img src="
                   ${product.images}"
               class="img-fluid w-100" alt="...">
               <div class="card-body rounded-bottom-4 border-0 bg-primary-blue">
                   <div class="rating my-3">
-                  <span class="text-black h4">${
-                    product.rating
-                  }</span>
+                  <span class="text-black h4">${product.rating}</span>
                     <span class="star" data-rating="1">&#9733;</span>
                     <span class="star" data-rating="2">&#9733;</span>
                     <span class="star" data-rating="3">&#9733;</span>
@@ -41,7 +54,9 @@ async function fetchProducts() {
                   </p>
                   <div class="d-flex justify-content-between align-items-center mt-4">
                       <h4 class="card-title pricing-card-title">
-                          ₹ ${Math.round(product.price * 89.87).toLocaleString('en-US')}
+                          ₹ ${Math.round(product.price * 89.87).toLocaleString(
+                            "en-US"
+                          )}
                       </h4>
                       <a type="button"
                       href="product_details.html?id=${product.id}"
@@ -51,22 +66,18 @@ async function fetchProducts() {
           </div>
         </div>`;
 
-          productList.appendChild(div);
+      productList.appendChild(div);
+    });
+  } catch (error) {
+    console.error("Error", error);
 
-        });
-
-
-    } catch (error) {
-
-        console.error("Error", error);
-
-        document.getElementById("productList").innerHTML = `<li class="text-danger">No List Found</li>`;
-
-    }
-
+    document.getElementById(
+      "productList"
+    ).innerHTML = `<li class="text-danger">No List Found</li>`;
+  }
 }
 
-document.addEventListener("DOMContentLoaded", fetchProducts);
+document.addEventListener("DOMContentLoaded", renderedProducts);
 
 // fetch categories function
 async function fetchCategories() {
@@ -144,7 +155,7 @@ const id = urlParams.get("id");
 
 
 // fetch product details function
-async function fetchProductDetails(id) {
+async function fetchProductDetails() {
 
   try {
 
@@ -270,137 +281,11 @@ async function fetchDetailsByCategory(categoryName) {
 
 }
 
-// fetch by aesc order
-async function asc() {
 
-  const response = await fetch(
-    `https://dummyjson.com/products/`
-  );
-
-  if (!response.ok) throw new Error("Network Error");
-
-  const data = await response.json();
-
-  const productList = document.getElementById("productList");
-
-   productList.innerHTML = "";
-
-  let sortdata = [...data.products].sort((a, b) => {
-
-    return a.price - b.price ;
-
-  });
-
-  sortdata.map((product) => {
-    const div = document.createElement("div");
-
-    div.className = "col";
-
-    div.innerHTML = `
-        <div class="card product-card shadow-lg my-4">
-          <img src="
-              ${product.images}"
-          class="img-fluid w-100" alt="...">
-          <div class="card-body bg-body-secondary bg-opacity-75">
-              <div class="rating my-3">
-              <span class="text-black h4">${product.rating}</span>
-                <span class="star" data-rating="1">&#9733;</span>
-                <span class="star" data-rating="2">&#9733;</span>
-                <span class="star" data-rating="3">&#9733;</span>
-                <span class="star" data-rating="4">&#9733;</span>
-                <span class="star" data-rating="5">&#9733;</span>
-              </div>
-              <h4 class="card-title my-3">
-                  ${product.title.slice(0, 18)}
-              </h4>
-              <p class="lead fw-normal line-clamp my-3">
-                  ${product.description}
-              </p>
-              <div class="d-flex justify-content-between align-items-center mt-4">
-                  <h4 class="card-title pricing-card-title">
-                      ₹ ${Math.round(
-                        product.price * 89.87
-                      ).toLocaleString("en-US")}
-                  </h4>
-                  <a type="button"
-                  href="product_details.html?id=${product.id}"
-                  onclick="fetchProductDetails()" class="btn btn-lg btn-primary">View Product</a>
-              </div>
-          </div>
-      </div>
-    </div>`;
-
-      productList.appendChild(div);
-  });
-
-}
-
-
-// fetch by desc order
-async function desc() {
-  const response = await fetch(`https://dummyjson.com/products/`);
-
-  if (!response.ok) throw new Error("Network Error");
-
-  const data = await response.json();
-
-  const productList = document.getElementById("productList");
-
-  productList.innerHTML = "";
-
-  let sortdata = [...data.products].sort((a, b) => {
-
-    return  b.price - a.price;
-  });
-
-  sortdata.map((product) => {
-    const div = document.createElement("div");
-
-    div.className = "col";
-
-    div.innerHTML = `
-      <div class="card product-card shadow-lg my-4">
-            <img src="
-                ${product.images}"
-            class="img-fluid w-100" alt="...">
-            <div class="card-body bg-body-secondary bg-opacity-75">
-                <div class="rating my-3">
-                <span class="text-black h4">${
-                  product.rating
-                }</span>
-                  <span class="star" data-rating="1">&#9733;</span>
-                  <span class="star" data-rating="2">&#9733;</span>
-                  <span class="star" data-rating="3">&#9733;</span>
-                  <span class="star" data-rating="4">&#9733;</span>
-                  <span class="star" data-rating="5">&#9733;</span>
-                </div>
-                <h4 class="card-title my-3">
-                    ${product.title.slice(0, 18)}
-                </h4>
-                <p class="lead fw-normal line-clamp my-3">
-                    ${product.description}
-                </p>
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <h4 class="card-title pricing-card-title">
-                        ₹ ${Math.round(
-                          product.price * 89.87
-                        ).toLocaleString("en-US")}
-                    </h4>
-                    <a type="button"
-                    href="product_details.html?id=${product.id}"
-                    onclick="fetchProductDetails()" class="btn btn-lg btn-primary">View Product</a>
-                </div>
-            </div>
-        </div>
-      </div>`;
-
-    productList.appendChild(div);
-  });
-}
-
-let timeout;
-
+// search debouncing function
 function debounceSearch(time, delay) {
+
+  let timeout;
 
   return function (...args) {
 
@@ -415,33 +300,47 @@ function debounceSearch(time, delay) {
   }
 }
 
+
 //product search functionality
 async function searchProducts() {
 
   const query = document.getElementById("productsearch").value.trim().toLowerCase();
 
-  try {
 
-    const response = await fetch(`https://dummyjson.com/products/search?q=${query}`);
+  // 👉 If search is empty → load all products
+
+  if (query === "") {
+
+    fetchProducts();
+
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `https://dummyjson.com/products/search?q=${query}`
+    );
 
     if (!response.ok) throw new Error("Network Error");
 
     const data = await response.json();
 
-    const productList = document.getElementById("productList");
+      const productList = document.getElementById("productList");
 
     if (data.products.length === 0) {
-
-      productList.innerHTML = `<h1 class="text-white display-4 mt-5 w-100">Something went wrong. Please try again</h1>`;
+      
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sorry, No data found!",
+      });
 
       return;
     }
 
     productList.innerHTML = "";
 
-
     data.products.map((product) => {
-
       const div = document.createElement("div");
 
       div.className = "col";
@@ -482,15 +381,31 @@ async function searchProducts() {
 
       productList.appendChild(div);
     });
-
-
   } catch (error) {
-
     console.error(error);
 
     productList.innerHTML = `<p class="text-danger">Something went wrong.</p>`;
-
   }
 }
 
-document.addEventListener("input", debounceSearch(searchProducts, 200));
+document.getElementById("productsearch").addEventListener("input", debounceSearch(searchProducts, 300));
+
+
+// sort by price functionality
+function sortByPrice() {
+  const sortValue = document.getElementById("priceSort").value;
+
+  let sortedProducts = [...allProducts];
+
+  if (sortValue === "") {
+    renderedProducts(allProducts);
+  }
+
+  if (sortValue === "asc") {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  } else if (sortValue === "desc") {
+    sortedProducts.sort((a, b) => b.price - a.price);
+  }
+
+  renderedProducts(sortedProducts);
+}

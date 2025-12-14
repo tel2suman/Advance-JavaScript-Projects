@@ -102,7 +102,7 @@
 .field-control {
     display: block;
     width: 100%;
-    padding: 8px 20px  8px 25px;
+    padding: 8px 40px  8px 10px;
     font-size: 1.3rem;
     font-weight: 500;
     line-height: 1.5;
@@ -121,4 +121,8 @@
     border-color: transparent;
     outline: none;
     box-shadow: none;
+}
+
+.form-select {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='4' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
