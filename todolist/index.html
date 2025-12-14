@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./style.css">
+
+    <title>Todo List with Local Storage</title>
+</head>
+<body>
+
+     <div class="container my-xl-5 my-lg-5 py-lg-3 py-xl-3 py-2 my-2">
+        <h3 class="my-4 text-white">Create Your Product List:</h3>
+        <form method="" id="inputForm" novalidate>
+            <div class="row">
+                <div class="col-lg-2 col-xl-2 col-12 mb-lg-0 mb-xl-0 mb-3 px-1">
+                    <div class="pdct position-relative">
+                        <i class="fa-solid fa-box-open"></i>
+                        <input type="text" class="form-control field-control rounded-3" name="productName" id="productName" placeholder="Product Name" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-12 mb-lg-0 mb-xl-0 mb-3 px-1">
+                    <div class="currency position-relative">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        <input type="number" class="form-control field-control rounded-3" name="productPrice" id="productPrice" placeholder="Amount" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-12 mb-lg-0 mb-xl-0 mb-3 px-1">
+                    <div class="currency position-relative">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" class="form-control field-control rounded-3 text-capitalize" name="search" id="search" placeholder="Search">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-12 mb-lg-0 mb-xl-0 mb-3 px-1">
+                    <button type="button" onclick="searchProduct()"
+                        class="btn btn-lg btn-primary bg-primary bg-opacity-75 border-0 fw-normal w-100">Find Product
+                        <i class="fa-solid fa-magnifying-glass position-relative search-icon fs-5 top-0 text-light"></i></button>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-12 mb-lg-0 mb-xl-0 mb-3 px-1">
+                    <button type="submit" class="btn btn-lg btn-light bg-light bg-opacity-75 border-0 fw-normal w-100">Create Product
+                        <i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="col-lg-2 col-xl-2 col-12 mb-lg-0 mb-xl-0 mb-3 px-1">
+                    <button type="button" onclick="allDelete()" id="deleteAllBtn" class="btn btn-lg btn-danger bg-danger bg-opacity-75 border-0 fw-normal w-100 d-none">Delete All Items
+                        <i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            </div>
+        </form>
+
+        <h3 class="my-4 text-white">Available Products:</h3>
+
+        <div class="table-responsive overflow-x-hidden">
+        <table class="table table-dark table-hover">
+            <thead class="table-secondary">
+            <tr>
+                <th class="text-center text-capitalize fs-4 bg-white bg-opacity-75" scope="col">#</th>
+                <th class="text-center text-capitalize fs-4 bg-white bg-opacity-75" scope="col">Name</th>
+                <th class="text-center text-capitalize fs-4 bg-white bg-opacity-75" scope="col">Amt (₹)</th>
+                <th class="text-center text-capitalize fs-4 bg-white bg-opacity-75" scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" id="productList">
+
+            </tbody>
+        </table>
+        </div>
+        <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-glass border-0">
+                    <div class="modal-header border-bottom-0 bg-info bg-opacity-50">
+                        <h1 class="modal-title fs-3 text-white text-capitalize" id="exampleModalLabel">Product Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-1">
+                        <form>
+                            <div class="mb-0">
+                                <label for="shownName" class="col-form-label fs-3 text-white">Product Name:</label>
+                                <input type="text" class="form-control field-control px-3 text-capitalize" name="shownName" id="shownName" readonly>
+                            </div>
+                            <div class="mb-0">
+                                <label for="shownPrice" class="col-form-label fs-3 text-white text-capitalize">Product Price (₹):</label>
+                                <input type="number" class="form-control field-control px-3" name="shownPrice" id="shownPrice" readonly>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn-lg btn btn-danger bg-danger bg-opacity-50 border-0 w-100" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="viewModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-glass border-0">
+                    <div class="modal-header border-bottom-0 bg-info bg-opacity-50">
+                        <h1 class="modal-title fs-3 text-white text-capitalize" id="exampleModalLabel2">Edit Product Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-1">
+                        <form id="modalForm" action="">
+                            <div class="mb-0">
+                                <label for="shownName" class="col-form-label fs-3 text-white">Product Name:</label>
+                                <input type="text" class="form-control field-control px-3 text-capitalize" name="editName" id="editName" required>
+                            </div>
+                            <div class="mb-0">
+                                <label for="shownPrice" class="col-form-label fs-3 text-white text-capitalize">Product Price (₹):</label>
+                                <input type="number" class="form-control field-control px-3" name="editPrice" id="editPrice" required>
+                            </div>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn-lg btn btn-danger bg-danger bg-opacity-75 border-0"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn-lg btn btn-info bg-info bg-opacity-75 border-0" data-bs-dismiss="modal">Update Details</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Js -->
+    <script src="./main.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

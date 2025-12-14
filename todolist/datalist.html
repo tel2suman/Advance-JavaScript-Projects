@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="productName" placeholder="Enter value">
+    <button id="saveButton">Save to Local Storage</button>
+
+    <!-- <p>Current Local Storage Value: <span id="displayValue"></span></p> -->
+
+    <input type="text" id="displayValue">
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+                const productName = document.getElementById('productName');
+                const saveButton = document.getElementById('saveButton');
+                const displayValue = document.getElementById('displayValue');
+                const localStorageKey = 'myStoredValue'; // Define a key for your local storage item
+
+                // Function to update the displayed value from local storage
+                function updateDisplay() {
+                    const storedValue = localStorage.getItem(localStorageKey);
+                    displayValue.value = storedValue ? storedValue : 'No value stored';
+                    productName.value = storedValue ? storedValue : ''; // Populate input with stored value
+                }
+
+                // Initial display update when the page loads
+                updateDisplay();
+
+                // Add an event listener to the button
+                saveButton.addEventListener('click', () => {
+                    const inputValue = productName.value;
+                    localStorage.setItem(localStorageKey, inputValue); // Save the input value to local storage
+                    updateDisplay(); // Update the displayed value
+                    alert('Value saved to local storage!');
+                });
+            });
+    </script>
+</body>
+</html>

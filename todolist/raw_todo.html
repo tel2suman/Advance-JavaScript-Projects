@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Menu Table with LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .close {
+            color: red;
+            float: right;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Add Menu Item</h2>
+
+    <form id="menuForm">
+        <input type="text" id="name" placeholder="Menu Name" required />
+        <input type="number" id="price" placeholder="Price" required />
+        <input type="search" id="search" placeholder="search" />
+        <button type="submit">Save</button>
+        <button onclick="searchMenu()">Search</button>
+        <button type="button" style="visibility: hidden;" onclick="delAll()" id="deleteall">Delete All</button>
+    </form>
+
+    <h3>Saved Items</h3>
+
+    <table id="menuTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Menu Name</th>
+                <th>Price (₹)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="menuBody"></tbody>
+    </table>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Menu Details</h3>
+            <p id="detailName"></p>
+            <p id="detailPrice"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("menuForm");
+        const menuBody = document.getElementById("menuBody");
+        const modal = document.getElementById("detailsModal");
+        const closeModal = document.getElementById("closeModal");
+        const detailName = document.getElementById("detailName");
+        const detailPrice = document.getElementById("detailPrice");
+        let editIndex = null;
+
+
+        document.addEventListener("DOMContentLoaded", loadMenus);
+
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const price = document.getElementById("price").value.trim();
+
+            if (!name || !price) return;
+
+            let menus = JSON.parse(localStorage.getItem("menus")) || [];
+
+            if (editIndex !== null) {
+                menus[editIndex] = { name, price };
+                localStorage.setItem("menus", JSON.stringify(menus));
+                editIndex = null;
+                form.reset();
+                loadMenus();
+                return;
+            }
+
+            let exist = menus.filter((item) => item.name == name)
+
+            console.log(exist, "exist")
+
+            if (exist.length > 0) {
+
+                alert("Dublicate value not accept")
+                form.reset()
+                return
+
+            }
+            console.log(menus, "menus");
+            menus.push({ name, price });
+            localStorage.setItem("menus", JSON.stringify(menus));
+
+            form.reset();
+            loadMenus();
+        });
+
+
+        function loadMenus(item) {
+            menuBody.innerHTML = "";
+
+            let menus = item && item.length > 0
+                ? item
+                : JSON.parse(localStorage.getItem("menus"));
+
+                // menus = menus.map((item, index) => ({ ...item, originalIndex: index }))
+
+             //menus = JSON.parse(localStorage.getItem("menus")) || [];
+
+            menus.length > 0 ? menus.forEach((menu, index) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${menu.name}</td>
+            <td>₹${menu.price}</td>
+            <td>
+              <button onclick="edit(${menu.originalIndex})">Edit</button>
+              <button onclick="viewDetails(${menu.originalIndex})">View</button>
+              <button onclick="deleteMenu(${menu.originalIndex})">Delete</button>
+            </td>
+          `;
+
+                menuBody.appendChild(row);
+            }) : menuBody.innerHTML = `
+            <tr>
+                <td colspan="4" style="text-align:center;">
+                No Data Found
+                </td>
+            </tr>
+            `;
+
+            let deleteAllBtn = document.getElementById("deleteall");
+
+            if (menus.length <= 1) {
+
+                deleteAllBtn.style.visibility = "hidden;";
+
+            } else {
+
+                deleteAllBtn.style.visibility = "visible";
+            }
+
+        }
+
+        //Edit Menu
+        function edit(index) {
+
+            const menusEdit = JSON.parse(localStorage.getItem("menus") || []);
+            editIndex = index;
+            document.getElementById("name").value = menusEdit[index]?.name;
+            document.getElementById("price").value = menusEdit[index]?.price;
+        }
+
+        //Delete All Menu
+        function delAll() {
+            if (confirm("Are You Sure to delete all items?")) {
+                localStorage.removeItem("menus");
+                deleteAllBtn.style.visibility = "hidden;";
+                loadMenus();
+                form.reset();
+            }
+        }
+
+
+
+        //Search Menu
+        function searchMenu() {
+            let menus = JSON.parse(localStorage.getItem("menus")) || [];
+            let search = document.getElementById("search").value.trim();
+
+            menus = menus.map((item, index) => ({ ...item, originalIndex: index }))
+
+            let filter = menus.filter((item) => item.name === search);
+
+            console.log(filter, "filter");
+            form.reset();
+            loadMenus(filter);
+        }
+
+        // Delete  menu
+        function deleteMenu(index) {
+            let menus = JSON.parse(localStorage.getItem("menus")) || [];
+            menus.splice(index, 1);
+            localStorage.setItem("menus", JSON.stringify(menus));
+            loadMenus();
+        }
+
+        // View details  modal
+        function viewDetails(index) {
+            const menus = JSON.parse(localStorage.getItem("menus")) || [];
+            const menu = menus[index];
+            console.log(menu, "menu");
+            detailName.textContent = `Name: ${ menu.name }`;
+            detailPrice.textContent = `Price: ₹${ menu.price }`;
+
+            modal.style.display = "block";
+        }
+
+        // Close modal
+        closeModal.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        // Close modal on outside click
+        window.onclick = (event) => {
+            console.log(event, "event");
+            console.log(modal, "modal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+</body>
+
+</html>
