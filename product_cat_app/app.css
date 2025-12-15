@@ -145,3 +145,38 @@
   height: 1000px;
   width: inherit;
 }
+
+.offcanvas-header {
+    background-color: aliceblue;
+}
+
+/* Media Query for Mobile Devices */
+
+	@media (320px <= width <= 480px) {
+
+    .full-width {
+      width: 100% !important;
+    }
+
+    .field-control {
+      display: block;
+      width: 100%;
+      padding: 8px 90px  8px 29px;
+    }
+}
+
+
+/* Media Query for low resolution  Tablets, iPad */
+
+  @media (481px <= width <= 767px) {
+
+    .full-width {
+      width: 100% !important;
+    }
+
+    .field-control {
+      display: block;
+      width: 100%;
+      padding: 8px 90px  8px 29px;
+    }
+  }
