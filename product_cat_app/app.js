@@ -18,11 +18,28 @@ async function fetchProducts() {
 
 document.addEventListener("DOMContentLoaded", fetchProducts);
 
+// Lazy Loading functionality
+const lazyObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.add("loaded");
+        observer.unobserve(img);
+      }
+    });
+  },
+  {
+    root: null,
+    threshold: 0.15,
+  }
+);
+
 
 //show rendered products
 async function renderedProducts(products) {
   try {
-
     const productList = document.getElementById("productList");
 
     productList.innerHTML = "";
@@ -33,10 +50,10 @@ async function renderedProducts(products) {
       div.className = "col";
 
       div.innerHTML = `
-          <div class="card product-card border-0 rounded-4 shadow-lg my-4">
+          <div class="card product-card lazy-img border-0 rounded-4 shadow-lg my-4">
               <img src="
                   ${product.images}"
-              class="img-fluid w-100" alt="...">
+              class="img-fluid w-100" alt="${product.id}">
               <div class="card-body rounded-bottom-4 border-0 bg-primary-blue">
                   <div class="rating my-3">
                   <span class="text-black h4">${product.rating}</span>
@@ -68,6 +85,12 @@ async function renderedProducts(products) {
 
       productList.appendChild(div);
     });
+
+    // 👇 Observe all lazy images AFTER render
+    document.querySelectorAll(".lazy-img").forEach((img) => {
+      lazyObserver.observe(img);
+    });
+
   } catch (error) {
     console.error("Error", error);
 
@@ -328,7 +351,7 @@ async function searchProducts() {
       const productList = document.getElementById("productList");
 
     if (data.products.length === 0) {
-      
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
