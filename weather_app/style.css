@@ -1,0 +1,207 @@
+
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+body {
+    background: url(assets/bg.jpg);
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100dvh;
+    background: rgb(0, 0, 0, 0.15);
+    backdrop-filter: blur(15px);
+}
+
+/* Utilities */
+
+.regular-text {
+    font-weight: 400;
+}
+
+.material-symbols-outlined {
+    font-size: 35px;
+}
+
+
+
+/* End Of Utilities */
+
+.main-container {
+    width: 550px;
+    height: fit-content;
+    z-index: 1;
+    background: linear-gradient(to top, rgb(0, 0, 0, 0.15),rgb(255, 255, 255, 0.50));
+    border-radius: 12px;
+    backdrop-filter: blur(100px);
+    padding: 40px;
+}
+
+/* Input Container */
+
+.input-container {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.location-input {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 3px solid transparent;
+    background: rgb(0, 0, 0, 0.15);
+    outline: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: 0.25s border;
+    padding-right: 45px;
+}
+
+.location-input:focus {
+   background: rgb(0, 0, 0, 0.15);
+}
+
+.location-input::placeholder{
+    font-size: 25px;
+    color: rgb(255, 255, 255, 0.75);
+    background: transparent;
+}
+
+.search-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    display: flex;
+    border: none;
+    cursor: pointer;
+}
+
+.material-icons {
+    font-size: 25px;
+}
+
+/* End Of Input Container */
+
+/* Weather Info */
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.temparature-text {
+    font-size: 50px;
+}
+
+.location-date-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location-info {
+    border:  0px solid green;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.weather-temparature-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conditions-item-info h4 {
+    text-align: center;
+}
+
+.weather-temparature-img {
+    width: 150px;
+    height: 150px;
+}
+
+.weather-temparature-info {
+    text-align: end;
+}
+
+.weather-conditions-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.weather-conditions-item {
+    display: grid;
+    text-align: center;
+    gap: 10px;
+}
+
+.weather-conditions-item span {
+    font-size: 40px !important;
+}
+
+.forecast-items-section {
+    display: flex;
+    gap: 20px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding-bottom: 12px;
+}
+
+.forecast-items-section::-webkit-scrollbar {
+  width: 20px;
+}
+
+.forecast-items-section::-webkit-scrollbar-thumb {
+  background: rgb(247, 246, 246, 0.15);
+}
+
+.forecast-items-section::-webkit-scrollbar-track {
+    background-color: rgb(247, 246, 246, 0.15);
+}
+
+.forecast-item {
+    min-width: fit-content;
+    background: rgb(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    align-items: center;
+    border-radius: 12px;
+    transition: 0.3s background;
+}
+
+.forecast-item:hover {
+    background: rgb(255, 255, 255, 0.15);
+}
+
+.forecast-item-img {
+    width: 70px;
+    height: 70px;
+}
+
+/* End Of Weather Info */
+

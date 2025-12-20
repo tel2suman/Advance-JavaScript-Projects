@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <main class="main-container">
+
+        <!-- header Section -->
+        <header class="input-container">
+            <form class="search-form" action="">
+                <input type="text" class="location-input" name="location" id="location" placeholder="Enter City Name">
+                <button class="search-btn" type="submit">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </button>
+            </form>
+        </header>
+
+        <!-- Weather Section -->
+        <section class="weather-info">
+            <div class="location-date-section">
+                <div class="location-info">
+                    <span class="material-symbols-outlined">
+                        location_on
+                    </span>
+                    <h4 class="location-text">Delhi</h4>
+                </div>
+                <h5 class="current-date-text regular-text">Wed, 16 Dec</h5>
+            </div>
+
+            <div class="weather-temparature-section">
+                <img src="assets/weather/clouds.svg" alt="" src="" class="weather-temparature-img">
+                <div class="weather-temparature-info">
+                    <h2 class="temparature-text"></h2>
+                    <h3 class="condition-text regular-text">Clouds</h3>
+                </div>
+            </div>
+
+            <!-- Weather Additional Info -->
+            <div class="weather-conditions-section">
+                <div class="weather-conditions-item">
+                    <span class="material-symbols-outlined">
+                        water_drop
+                    </span>
+                    <div class="conditions-item-info">
+                        <h5 class="regular-text">Humidity</h5>
+                        <h4 class="humidity-text">20%</h4>
+                    </div>
+                </div>
+
+                <div class="weather-conditions-item">
+                    <span class="material-symbols-outlined">
+                        air
+                    </span>
+                    <div class="conditions-item-info">
+                        <h5 class="regular-text">Wind Speed</h5>
+                        <h4 class="windspeed-text">5 KM/h</h4>
+                    </div>
+                </div>
+
+                <div class="weather-conditions-item">
+                    <span class="material-symbols-outlined">
+                        visibility
+                    </span>
+                    <div class="conditions-item-info">
+                        <h5 class="regular-text">Visibility</h5>
+                        <h4 class="visibility-text">3 Km</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weather-conditions-section">
+                <div class="weather-conditions-item">
+                    <span class="material-symbols-outlined">
+                        thermometer
+                    </span>
+                    <div class="conditions-item-info">
+                        <h5 class="regular-text">Feels Like</h5>
+                        <h4 class="feels-text">20%</h4>
+                    </div>
+                </div>
+
+                <div class="weather-conditions-item">
+                    <span class="material-symbols-outlined">
+                        airwave
+                    </span>
+                    <div class="conditions-item-info">
+                        <h5 class="regular-text">Pressure</h5>
+                        <h4 class="pressurespeed-text">5 KM/h</h4>
+                    </div>
+                </div>
+
+                <div class="weather-conditions-item">
+                    <span class="material-symbols-outlined">
+                        thermostat
+                    </span>
+                    <div class="conditions-item-info">
+                        <h5 class="regular-text">Max Feels</h5>
+                        <h4 class="max-temp-text">3 Km</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecast Sections -->
+            <div class="forecast-items-section">
+                <div class="forecast-item">
+                    <h5 class="forecast-item-date regular-text">05 Aug</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="" class="forecast-item-img">
+                    <h5 class="forecast-item-temp">27 °C</h5>
+                </div>
+                <div class="forecast-item">
+                    <h5 class="forecast-item-date regular-text">05 Aug</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="" class="forecast-item-img">
+                    <h5 class="forecast-item-temp">27 °C</h5>
+                </div>
+                <div class="forecast-item">
+                    <h5 class="forecast-item-date regular-text">05 Aug</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="" class="forecast-item-img">
+                    <h5 class="forecast-item-temp">27 °C</h5>
+                </div>
+                <div class="forecast-item">
+                    <h5 class="forecast-item-date regular-text">05 Aug</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="" class="forecast-item-img">
+                    <h5 class="forecast-item-temp">27 °C</h5>
+                </div>
+                <div class="forecast-item">
+                    <h5 class="forecast-item-date regular-text">05 Aug</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="" class="forecast-item-img">
+                    <h5 class="forecast-item-temp">27 °C</h5>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script src="./script.js"></script>
+</body>
+</html>
