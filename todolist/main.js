@@ -116,8 +116,10 @@ editModal.addEventListener("submit", function (e) {
 function displayProducts(item) {
   productList.innerHTML = "";
 
-  let products = item && item.length > 0 ? item :
-    JSON.parse(localStorage.getItem("products"));
+  let products =
+    item && item.length > 0
+      ? item
+      : JSON.parse(localStorage.getItem("products")) || [];
 
   products.length > 0
     ? products.map((products, index) => {
@@ -167,13 +169,13 @@ function viewData(index) {
 
   let product = products[index];
 
-  localStorage.setItem("product", JSON.stringify(product));
+  //localStorage.setItem("product", JSON.stringify(product));
 
   console.log(product, "product");
 
-  shownName.value = `${product.name}`;
+  shownName.value = `${product?.name}`;
 
-  shownPrice.value = `${product.price}`;
+  shownPrice.value = `${product?.price}`;
 }
 
 //get form data for edit functionality
@@ -191,32 +193,23 @@ function editData(index) {
 }
 
 //form data search functionality
-function searchProduct () {
+// function searchProduct () {
 
-  let products = JSON.parse(localStorage.getItem("products")) || [];
+//   let products = JSON.parse(localStorage.getItem("products")) || [];
 
-  let search = document.getElementById("search").value.trim();
+//   let search = document.getElementById("search").value.trim();
 
-  products = products.map((item, index) => ({ ...item, originalIndex: index }));
+//   products = products.map((item, index) => ({ ...item, originalIndex: index }));
 
-  let productsfilter = products.filter((item)=>item.name === search);
+//   let productsfilter = products.filter((item)=>item.name === search);
 
-  console.log(productsfilter, "productsfilter")
+//   console.log(productsfilter, "productsfilter")
 
-  // if (products.name !== productList) {
+//   form.reset();
 
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Oops...",
-  //     text: "please try agin, no data found",
-  //   });
-  // }
+//   displayProducts(productsfilter);
 
-  form.reset();
-
-  displayProducts(productsfilter);
-
-}
+// }
 
 // form data delete functionality
 function deleteData(sid) {

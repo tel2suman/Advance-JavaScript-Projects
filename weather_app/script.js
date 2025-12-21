@@ -50,10 +50,12 @@ async function fetchWeatherData(city_name) {
     } catch (error) {
 
       console.error("Error", error);
+       Swal.fire({
+       icon: "error",
+       title: "Oops...",
+       text: "Sorry!! No Data Found.",
+     });;
 
-      document.querySelector(
-        ".weather-info"
-      ).innerHTML = `<p class="text-danger">No Data Found</p>`;
     }
 }
 
@@ -104,15 +106,16 @@ formElement.addEventListener('submit', function(e){
     inputElement.value = "";
   }
 
-  const weatherinfo = document.querySelector(".weather-info");
-
   if (city_name.length === 0) {
 
-    weatherinfo.innerHTML = `<h4>No Data Found</h4>`
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please enter a city name!",
+    });
 
     inputElement.value = "";
   }
-
 })
 
 fetchWeatherData(city);
