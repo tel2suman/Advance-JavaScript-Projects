@@ -121,25 +121,29 @@ function displayProducts(item) {
       ? item
       : JSON.parse(localStorage.getItem("products")) || [];
 
+      products = products.map((item, index) => ({...item,
+        originalIndex: index
+      }));
+
   products.length > 0
-    ? products.map((products, index) => {
+    ? products.map((product, index) => {
         let row = document.createElement("tr");
         row.innerHTML = `<td class="text-center pt-3 fs-4 text-white">${
           index + 1
         }</td>
         <td class="text-center pt-3 fs-4 text-capitalize text-white">${
-          products.name
+          product.name
         }</td>
-      <td class="text-center pt-3 fs-4 text-white">₹ ${products.price}</td>
+      <td class="text-center pt-3 fs-4 text-white">₹ ${product.price}</td>
       <td class="row text-center">
         <div class="d-lg-grid d-xl-grid d-block col-lg-4 col-xl-4 col-4 px-0">
-          <button onclick="viewData(${products.originalIndex})" class="btn btn-lg btn-success bg-success bg-opacity-75 mx-lg-2 mx-1 border-0 text-capitalize px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-bs-whatever="@fat">View Item<i class="fa-solid fa-eye mx-lg-2 mx-1"></i></button>
+          <button onclick="viewData(${product.originalIndex})" class="btn btn-lg btn-success bg-success bg-opacity-75 mx-lg-2 mx-1 border-0 text-capitalize px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-bs-whatever="@fat">View Item<i class="fa-solid fa-eye mx-lg-2 mx-1"></i></button>
         </div>
         <div class="d-lg-grid d-xl-grid d-block col-lg-4 col-xl-4 col-4 px-0">
-          <button onclick="editData(${products.originalIndex})" class="btn btn-lg btn-info bg-info bg-opacity-75 mx-lg-2 mx-1 border-0 text-capitalize px-2" data-bs-toggle="modal" data-bs-target="#viewModal2" data-bs-whatever="@fat"> Edit Item<i class="fa-regular fa-pen-to-square mx-lg-2 mx-1"></i></button>
+          <button onclick="editData(${product.originalIndex})" class="btn btn-lg btn-info bg-info bg-opacity-75 mx-lg-2 mx-1 border-0 text-capitalize px-2" data-bs-toggle="modal" data-bs-target="#viewModal2" data-bs-whatever="@fat"> Edit Item<i class="fa-regular fa-pen-to-square mx-lg-2 mx-1"></i></button>
         </div>
         <div class="d-lg-grid d-xl-grid d-block col-lg-4 col-xl-4 col-4 px-0">
-          <button onclick="deleteData(${products.originalIndex})" class="btn btn-lg btn-danger bg-danger bg-opacity-75 mx-lg-2 mx-0 border-0 text-capitalize px-2">Delete Item<i class="fa-solid fa-trash-can mx-xl-2 mx-1"></i></button>
+          <button onclick="deleteData(${product.originalIndex})" class="btn btn-lg btn-danger bg-danger bg-opacity-75 mx-lg-2 mx-0 border-0 text-capitalize px-2">Delete Item<i class="fa-solid fa-trash-can mx-xl-2 mx-1"></i></button>
         </div>
       </td>`;
         productList.appendChild(row);
@@ -193,23 +197,32 @@ function editData(index) {
 }
 
 //form data search functionality
-// function searchProduct () {
+function searchProduct () {
 
-//   let products = JSON.parse(localStorage.getItem("products")) || [];
+  let products = JSON.parse(localStorage.getItem("products")) || [];
 
-//   let search = document.getElementById("search").value.trim();
+  let search = document.getElementById("search").value.trim();
 
-//   products = products.map((item, index) => ({ ...item, originalIndex: index }));
+  if (!search) {
 
-//   let productsfilter = products.filter((item)=>item.name === search);
+    displayProducts();
 
-//   console.log(productsfilter, "productsfilter")
+    return;
+  }
 
-//   form.reset();
+  products = products.map((item, index) => ({ ...item, originalIndex: index }));
 
-//   displayProducts(productsfilter);
+  let productsfilter = products.filter(
+    (item) => item.name.toLowerCase().includes(search.toLowerCase())
+  );
 
-// }
+  //console.log(productsfilter, "productsfilter")
+
+  form.reset();
+
+  displayProducts(productsfilter);
+
+}
 
 // form data delete functionality
 function deleteData(sid) {
